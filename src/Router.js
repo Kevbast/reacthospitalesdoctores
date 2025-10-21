@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom'
 import Home from './components/Home'
 import MenuHospitales from './components/MenuHospitales'
 import Doctores from './components/Doctores';
+import DetallesDoctor from './components/DetallesDoctor';
 
 export default class Router extends Component {
 
@@ -12,6 +13,11 @@ export default class Router extends Component {
     function DoctoresElement() {
         let {idhospital}= useParams();//lo capturamos con useparams
         return (<Doctores idhospital={idhospital}/>)
+    }
+
+    function DetallesDoctoresElement() {
+        let {iddoctor}= useParams();//lo capturamos con useparams
+        return (<DetallesDoctor iddoctor={iddoctor}/>)
     }
     return (
       <BrowserRouter>

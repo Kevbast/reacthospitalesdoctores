@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Global from './../Global'
+import DetallesDoctor from './DetallesDoctor';
 
 export default class Doctores extends Component {
     url=Global.apiDoctores;
 
     state={
-        doctores:[]
+        doctores:[],
+        idDoctor:0
     }
 
-    loadDoctores=()=>{
-        
+    loadDoctores=()=>{     
         var request="/api/Doctores/DoctoresHospital/"+this.props.idhospital;
         axios.get(this.url+request).then(response=>{
             console.log("Leyendo doctores del hospital "+ this.props.idhospital);
-            this.setState({
-                doctores:response.data
-            })
             console.log(response.data);
+            this.setState({
+                doctores:response.data,
+                 
+            })
         })
-
     }
-
     componentDidMount=()=>{
         this.loadDoctores();
     }
@@ -29,8 +29,14 @@ export default class Doctores extends Component {
     componentDidUpdate=(oldProps)=>{
         if(oldProps.idhospital != this.props.idhospital){
             this.loadDoctores();
+            //seteamos el iddoctor al cargar los doctores de otro hospital(si no queremos q se vea los anteriores detalles)
+            //se podría setear dentro del didupdate
+            this.setState({
+                idDoctor:0
+            })
         }
     }
+ 
 
   render() {
     return (
@@ -44,6 +50,7 @@ export default class Doctores extends Component {
                         <th scope="col">Especialidad</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">Salario</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,6 +62,12 @@ export default class Doctores extends Component {
                                         <td>{doctor.apellido}</td>
                                         <td>{doctor.especialidad}</td>
                                         <td>{doctor.salario}</td>
+                                        <td><button className='btn btn-success' onClick={()=>{//IMPORTANTE PARA CAMBIAR EL ESTADO DEL IDDOCTOR
+                                            console.log(doctor.idDoctor);
+                                                this.setState({
+                                                    idDoctor:doctor.idDoctor
+                                                })
+                                        }}>Details</button></td>
                                     </tr>
                                 )
                             })
@@ -62,7 +75,11 @@ export default class Doctores extends Component {
                 </tbody>
             </table>
         </div>
-        
+                {//AQUÍ MOSTRAMOS EL COMPONENTE DETAILSDOCTOR
+                  //SI ES 0 PUES QUE NO SE MUESTRE EL COMPONENT 
+                this.state.idDoctor !=0 &&
+                <DetallesDoctor idDoctor={this.state.idDoctor}/>               
+                }
       </div>
     )
   }
