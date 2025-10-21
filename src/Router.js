@@ -15,11 +15,6 @@ export default class Router extends Component {
         let {idhospital}= useParams();//lo capturamos con useparams
         return (<Doctores idhospital={idhospital}/>)
     }
-
-    function DetallesDoctoresElement() {
-        let {iddoctor}= useParams();//lo capturamos con useparams
-        return (<DetallesDoctor iddoctor={iddoctor}/>)
-    }
     return (
       <BrowserRouter>
       <MenuHospitales/>
