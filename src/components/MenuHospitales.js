@@ -36,7 +36,7 @@ export default class MenuHospitales extends Component {
           <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="nav-link active" aria-current="page" to="/doctores/2">Doctor 2</NavLink>
+          <NavLink className="nav-link active" aria-current="page" to="/createhospital">Create hospital</NavLink>
         </li>
         <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,8 +45,8 @@ export default class MenuHospitales extends Component {
           <ul className="dropdown-menu">
             {//FUNCIÓN PARA VER LOS HOSPITALES Y OBTENER EL IDHOSPITAL PARA ENVIARLO A DOCTORES CON EL NAVLINK
                 this.state.hospitales.map((hospital,index)=>{
-                    return (<li className='dropdown-item' key={index} >
-                        <NavLink to={"/doctores/"+ hospital.idhospital}>{hospital.nombre}</NavLink>
+                    return (<li className="nav-item" key={index} >
+                        <NavLink className="dropdown-item" to={"/doctores/"+ hospital.idhospital}>{hospital.nombre}</NavLink>
                     </li>)
                 })
             }

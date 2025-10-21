@@ -14,7 +14,7 @@ import Router from './Router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div style={{margin:"auto",textAlign:"center"}}>
+  <div style={{margin:"auto"}}>
     <Router/>
   </div>
 );
