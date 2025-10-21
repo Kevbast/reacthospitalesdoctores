@@ -1,7 +1,26 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-
+import axios from 'axios'
+import Global from './../Global'
 export default class MenuHospitales extends Component {
+    url=Global.apiHospitales;
+    state={
+        hospitales:[]
+    }
+
+    loadHospitales=()=>{
+        let request ="webresources/hospitales"
+        axios.get(this.url+request).then(response=>{
+            console.log("Leyendo hospitales");
+            this.setState({
+                hospitales:response.data
+            })
+        })
+    }
+    componentDidMount=()=>{
+        this.loadHospitales();
+    }
+
   render() {
     return (
 
@@ -21,13 +40,16 @@ export default class MenuHospitales extends Component {
         </li>
         <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            Hospitales
           </a>
           <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">Action</a></li>
-            <li><a className="dropdown-item" href="#">Another action</a></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><a className="dropdown-item" href="#">Something else here</a></li>
+            {//FUNCIÓN PARA VER LOS HOSPITALES Y OBTENER EL IDHOSPITAL PARA ENVIARLO A DOCTORES CON EL NAVLINK
+                this.state.hospitales.map((hospital,index)=>{
+                    return (<li className='dropdown-item' key={index} >
+                        <NavLink to={"/doctores/"+ hospital.idhospital}>{hospital.nombre}</NavLink>
+                    </li>)
+                })
+            }
           </ul>
         </li>
       </ul>

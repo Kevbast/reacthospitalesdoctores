@@ -1,10 +1,68 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import Global from './../Global'
 
 export default class Doctores extends Component {
+    url=Global.apiDoctores;
+
+    state={
+        doctores:[]
+    }
+
+    loadDoctores=()=>{
+        
+        var request="/api/Doctores/DoctoresHospital/"+this.props.idhospital;
+        axios.get(this.url+request).then(response=>{
+            console.log("Leyendo doctores del hospital "+ this.props.idhospital);
+            this.setState({
+                doctores:response.data
+            })
+            console.log(response.data);
+        })
+
+    }
+
+    componentDidMount=()=>{
+        this.loadDoctores();
+    }
+    //IMPORTANTE ACORDARSE DEL DIDPUDTAE PUSTO QUE CAMBIA LOS PARAMETROS SEGUN EL NAVLINK
+    componentDidUpdate=(oldProps)=>{
+        if(oldProps.idhospital != this.props.idhospital){
+            this.loadDoctores();
+        }
+    }
+
   render() {
     return (
       <div>
-        <h2>Doctores {this.props.idhospital}</h2>
+        <h2>Doctores HOSPITAL {this.props.idhospital}</h2>
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">idDoctor</th>
+                        <th scope="col">Especialidad</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Salario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                       {
+                            this.state.doctores.map((doctor,index)=>{
+                                return(
+                                    <tr key={index}>
+                                        <td>{doctor.idDoctor}</td>
+                                        <td>{doctor.apellido}</td>
+                                        <td>{doctor.especialidad}</td>
+                                        <td>{doctor.salario}</td>
+                                    </tr>
+                                )
+                            })
+                       }
+                </tbody>
+            </table>
+        </div>
+        
       </div>
     )
   }
