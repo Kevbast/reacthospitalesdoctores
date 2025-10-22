@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Global from '../Global'
+import { Navigate } from 'react-router-dom';
 
 export default class CreateHospital extends Component {
     cajaId =React.createRef();
@@ -12,7 +13,8 @@ export default class CreateHospital extends Component {
     url =Global.apiHospitales
 
     state={
-        mensaje:""
+        mensaje:"",
+        status:false //para navegar sobre los componentes usando navegate
     }
 
     insertHospital=(event)=>{//
@@ -33,7 +35,8 @@ export default class CreateHospital extends Component {
 
         axios.post(this.url +request,hospital).then(response=>{
             this.setState({
-                mensaje:"HOSPITAL INSERTADO "+hospital.nombre
+                mensaje:"HOSPITAL INSERTADO "+hospital.nombre,
+                status:true
             })
         })
     }
@@ -41,6 +44,10 @@ export default class CreateHospital extends Component {
   render() {
     return (
       <div>
+        {//PROCEDEMOS A HACER AQUÇI LA FUNCIÓN DEL NAVGEGAR
+          this.state.status ==true &&
+          <Navigate to="/hospitales"/>
+        }
         <h1 style={{color:"red"}}>CreateHospital</h1>
         <h3 style={{color:"green"}}>{this.state.mensaje}</h3>
             <form>

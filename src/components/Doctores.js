@@ -42,8 +42,8 @@ export default class Doctores extends Component {
     return (
       <div>
         <h2>Doctores HOSPITAL {this.props.idhospital}</h2>
-        <div class="table-responsive">
-            <table class="table table-primary">
+        <div className="table-responsive">
+            <table className="table table-primary">
                 <thead>
                     <tr>
                         <th scope="col">idDoctor</th>
